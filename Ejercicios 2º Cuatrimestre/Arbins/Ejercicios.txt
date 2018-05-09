@@ -1,0 +1,130 @@
+ejercicio: averiguar la altura de un arbol
+
+int talla(const Arbin<int> &a){
+	if(!a.esVacio())
+		return 0;
+	else
+		return max(talla(a.hijoIz()),talla(a.hijoDer()))+1;
+}
+
+ejercicio: frontera 
+opcion1
+Lista<int> frontera(const Arbin<int> &a){
+	if(a.esVacio())
+		return Lista<int> ();
+	else{
+		Lista<int> fiz= frontera(a.hijoIz());
+		Lista<int> fder = frontera(a.hijoDer());
+		concatena( fiz,der);
+		return fiz;
+	}
+}
+opcion2
+Lista<int> Lista<int> frontera(const Arbin<int> &a){
+	Lista<int> resul;
+	frontera_aux(a,result);
+	return result;
+}
+
+void frontera_aux(const Arbin<int>& a, Lista<int> & resul){
+	if(a.esVacio()){
+		if(esHoja(a))
+			resul.pon_final(a.raiz())
+		else{
+			frontera_aux(a.hijoIz(),resul);
+			frontera_aux(a.hijoDer(),resul);
+		}
+	}
+}
+
+**************************************************************
+concatena() y esHoja() implementadas en txt de los reccorridos
+**************************************************************
+
+
+ejercicio: construir espejo  de un arbol
+
+Arbin<int> espejo(cont Arbin<int> &a){
+	if(a.esVacio()) 
+		return a;
+	else{
+		return new *Arbin<int>(espejo(a.hijoDer()),a.raiz(),espejo(a.hijoiz));
+	}
+}
+
+
+
+ejercicio: 
+
+int minnElem(const  Arbin<int>& a){
+	if(a.esVacio())
+		throw EArbolVacio();
+	return minElem_aux(a);
+}
+
+int minElem_aux(const Arbin<int> & a){
+	if(esHoja(a))
+		return a.raiz();
+	else return min(minElem_aux(a.hijoIz()), min(a.raiz(),minElem_aux(a.hijoIz())));
+}
+
+
+ejercicio 3: imprimir arbol de forma bonita
+
+template<class T>
+void printArbol(const Arbin<T>& a){
+	printArbol_aux(a,0);
+}
+
+template<class T>
+void printArbol_aux(const Arbin<T>& a, int nblancos){
+	for(i = 0, i < nblancos;++i)
+		cout<<" ";
+	if(a.esVacio())
+		cout<<"<vacio>"<<endl;
+	else if(esHoja(a))
+		cout<< a.raiz() <<endl;
+	else{
+		cout<<a.raiz()<<endl;
+		printArbol_aux(a.hijoIz(), nblancos+3);
+		printArbol_aux(a.hijoDer(), nblancos+3);
+	}
+}
+
+
+ejercicio 27 : Junio 2014: Tesoro y dragones
+
+string ruta_menos_peligrosa(const Arbin<string>& mapa){
+	if(mapa.esVacio()
+		throw EMapaNoValido();
+	string meta;
+	int num_dragones;
+	encuentra_ruta_menos_peligrosa(mapa,meta,num_dragones);
+	return meta;	
+}
+
+void encuentra_ruta_menos_peligrosa(const Arbin<string>& mapa, string &meta, int &num_dragones){
+	if(mapa.esHoja()){
+		meta = mapa.raiz();
+		num_dragones = 0;
+	}
+	else{
+		if(mapa.hijoDer().esVacio()){
+			encuentra_ruta_menos_peligrosa(mapa.hijoIz(),meta,num_dragones);
+		}
+		else(mapa.hijoIz().esVacio()){
+			encuentra_ruta_menos_peligrosa(mapa.hijoDer(),meta,num_dragones);
+		}
+		else{
+			encuentra_ruta_menos_peligrosa(mapa.hijoIz(),meta,num_dragones);
+			string meta_der;
+			int num_dragones_der;
+			encuentra_ruta_menos_peligrosa(mapa.hijoDer(),meta_der,num_dragones_der);
+			if(num_dragones > num_dragones_der){
+				meta = meta_der;
+				num_dragones = num_dragones_der;
+			}
+		}
+		if(mapa.raiz() == "Dragon") num_dragones++;
+	}
+}

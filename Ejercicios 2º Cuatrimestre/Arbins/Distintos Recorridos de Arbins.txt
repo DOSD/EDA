@@ -1,0 +1,151 @@
+Recorridos de un arbin :
+
+Preorden:
+	-raiz
+	-iz
+	-drch
+Postorden:
+	-iz
+	-drch
+	-raiz
+Inorden:
+	-iz
+	-raiz
+	-drch
+recorrido por niveles:
+		1
+	       ___
+	    2         3
+   	  ______________
+         4     5    6    7
+       _____________________
+
+salida: 1,2,3,4,5,6,7
+
+
+Ejercicio 1: imprimir en preorden
+
+template<class T>
+void imprimir_en_preorden(const Arbin<T> &a){
+	if(!a.esVacio()){
+		cout << a.raiz() << endl;
+		imprimir_en_preorden(a.hijoIz());
+		imprimir_en_preorden(a.hijoDer());
+	}
+}
+
+Ejercico 2: imprimir en postorden
+template<class T>
+void imprimir_en_postorden(const Arbin<T> &a){
+	if(!a.esVacio()){
+		imprimir_en_postorden(a.hijoIz());
+		imprimir_en_postorden(a.hijoDer());
+		cout << a.raiz() << endl;
+	}
+
+}
+
+Ejercico 3: imprimir en inorden
+template<class T>
+void imprimir_en_inorden(const Arbin<T> &a){
+	if(!a.esVacio()){
+		imprimir_en_inorden(a.hijoIz());
+		cout << a.raiz() << endl;
+		imprimir_en_inorden(a.hijoDer());
+	}
+}
+
+Ejercico 4: listar en preorden
+
+template<class T>
+Lista<T> listar_en_preorden(const Arbin<T> &a){
+	if(!a.esVacio()){
+		Lista<T> result;
+		result.pon_ppio(a.raiz());
+		Lista<T> result_iz = listar_en_preorden(a.hijoIz());
+		Lista<T> result_der = listar_en_preorden(a.hijoDer());
+		concatena_a(resul,resul_iz);
+		concatena_a(resul,resul_der);
+		return resul;
+	}
+	else return Lista<T>();
+}
+
+template<class T>
+void concatena_a(Lista<T>& l1, const Lista<T> &l2){
+	Lista<T> :: ConstIterator i2 = l2.cbegin();
+	Lista<T> :: ConstIterator fin = l2.cfin();
+	while(i2 != fin){
+		l1.pon_final(i2.elem())
+		i2.next();
+	}	
+}
+
+// este mismo ejercicio pero optimizado
+
+template<class T>
+Lista<T> listar_en_preorden(const Arbin<T> &a){
+	Lista<T> resul;
+	listar_en_preorden_aux(a,resul);
+	return resul;
+}
+template<class T>
+void listar_en_preorden_aux(const Arbin<T> &a, Lista<T> & recorrido){
+	if(!a.esVacio()){
+		recorrido.pon_final(a.raiz());
+		listar_en_preorden_aux(a.hijoIz(),recorrido);
+		listar_en_preorden_aux(a.hijoDer(),recorrido);
+	}
+}
+
+
+_____________________________________________________________________________________________________
+// esquema general de resolucion de problemas de arbinss
+
+<<RESULTADO>>  resolver_problema(const Arbin<..> a){
+	<<ENTRADAS = crear  entradas iniciales>>
+	<<Declarar SLIDAS>>
+	<<ACUMULADORES = crear acumuladores>>
+	resolver_problemas_aux(<<ENTRADAS>>,<<SALIDAS>>, <<ACUMULADORES>>)
+	<<Devolver SALIDAS>>
+}
+void resolver_problemas_aux(<<ENTRADAS>>,<<SALIDAS>>, <<ACUMULADORES>>){
+	if<<caso base 1>> [<<operaciones caso base 1>>]
+	....
+	else if <<caso base n>> [<<operaciones caso base n>>]
+	....
+	else{
+		<<Premarar parametros>>
+		<<acciones>>
+		 resolver_problemas_aux(a.hijjoIz(),...);
+		<<Premarar parametros>>
+		<<acciones>>
+		resolver_problemas_aux(a.hijjoDer(),...);
+		<<acciones>>
+	}
+}
+______________________________________________________________________________________________________
+
+ejercicio: realizar recorrido por niveles
+
+template<class T>
+void imprimirRecorridoPorNiveles(const Arbin<T> &a){
+	Cola<Arbin<T>> pendientes;
+	pendientes.pon(a);
+	while(!pendiente.esVacia()){
+		Arbin<T> actual = pendientes.primero();
+		cout<<actual.raiz()<<endl;	
+		pendientes.quita();
+		if(!a.hijoIz.esVacio())
+			pendientess.pon(a.hijoIz());
+		if(!a.hijoDer.esVacio())
+			pendientess.pon(a.hijoDer());
+	}
+}
+
+______________________________________________________________________________________________________
+
+// devuelve si un arbol es hoja, o si tiene mas hijos
+bool esHoja(const Arbin<int>& cuenca){
+	return cuenca.hijoIz().esVacio() && cuenca.hijoDer().esVacio();
+}

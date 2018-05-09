@@ -1,0 +1,162 @@
+ejercicio 20 Listas: de las hojas : imprimir elementos de una lista usando iteradores
+
+template<class T>
+void imprimeElementos(const Lista<T> & lista) const{
+	Lista<T> :: ConstIterator act = lista.cbegin(); 
+	Lista<T> :: ConstIterator fin = lista.cend();
+	while(act != fin){
+		cout << act.alem() << '\n';
+		act.next();
+	}
+}
+
+ejercicio 21:
+
+void num_posiciones:especiales( const Lista<int>& l) const{
+	Lista<int> :: ConstIterator act = l.cbegin(); 
+	Lista<int> :: ConstIterator fin = l.cend(); 
+	int suma = 0;
+	int num_pos = 0;
+	while(act != fin){
+		if ( act.elem() == suma)
+			num_pos ++;
+		suma += act.elem();
+		act.next();
+	}
+	
+	return num_pos;
+}
+
+ejercicio 22:
+
+void  duplica(const Lista<int>& l) {
+	Lista<int> :: Iterator act = l.begin(); 
+	Lista<int> :: Iterator fin = l.end(); 
+	
+	while(act != fin){
+		act.set(act.elem()*2);
+		act.next();
+	}
+}
+
+ejercicio 23:
+
+void  duplica(const Lista<int>& l) {
+	Lista<int> :: Iterator act = l.begin(); 
+	Lista<int> :: Iterator fin = l.end(); 
+	
+	while(act != fin){
+		insertar(act.elem(),act)
+		act.next();
+	}
+}
+
+ejercicio 24:
+
+void union(const Lista<int> l1, const Lista<int> l2, Lista<int> &result){
+	Lista<int>:: ConstIterator i1 = l1.cbegin();
+	Lista<int>:: ConstIterator fin1 = l1.cend();
+	Lista<int>:: ConstIterator i2 = l2.cbegin();
+	Lista<int>:: ConstIterator fin2 = l2.cend();
+
+	while(i1 != fin1 && i2 != fin2){
+		if(i1.elem() < i2.elem()){
+			result.pon_final(i1.elem());
+			i1.next();
+		}
+		else if(i1.elem() == i2.elem()){
+			result.pon_final(i1.elem());
+			i1.next();
+			i2.next();
+		}
+		else{
+			result.pon_final(i2.elem());
+			i2.next();
+		}
+
+	}
+	while(i1 != fin1){ result.pon_final(i1.elem()); i1.next();}
+	while(i2 != fin2){ result.pon_final(i2.elem()); i2.next();}
+	
+}
+
+
+ejercicio: inserta por posicion
+
+void insertaPorPosicion(const T& elem, int pos){
+	if(pos < 0 || pos >= longitud()) throw EPosicionInvalida();
+	
+	if(pos == 0){
+		//pon_ppio(elem);
+		//en caso de que no estuvise la func anterior
+		Nodo* nodo = new Nodo(NULL,elem,_prim);
+		if(_prim != NULL){
+			_prim->ant = nodo;
+			_prim = nodo;
+		}
+		else {
+			_prim = nodo;
+			_ult = nodo;
+		}
+	}
+	else if( pos == longitud()-1){
+		//pon_final(elem);
+		//en caso de que no estuvise la func anterior
+		Nodo* nodo = new Nodo(ult,elem,NULL);
+		if(_ult != NULL){
+			_ult->sig = nodo;
+			_ult = nodo;
+		}
+		else {
+			_prim = nodo;
+			_ult = nodo;
+		}
+	}
+	else {
+		Nodo* npos = _prim;
+		for(int i = 0; i < pos; ++i){
+			npos = npos->sig;
+		}
+		//insertaElem(elem, npos->ant, npos);
+		//en caso de que no estuvise la func anterior
+		Nodo* nodo = new Nodo(npos-> ant, elem, npos);
+		npos->_ant->sig = nodo;
+		npos->_ant = nodo;
+	}
+}
+
+ejercicio 27: 3 posibilidades
+
+void concatena(const Lista<T>& l){
+	Nodo *act = l->_prim;
+	while(act != NULL){
+		pon_final(act->_elem);
+		act = act->sig;
+	}
+}
+
+template<class T>
+void concatena(Lista<T>& l1, const Lista<T>& l2){
+	Lista<int>:: ConstIterator act = l2.cbegin();
+	Lista<int>:: ConstIterator fin = l2.cend();
+	while(act != fin){
+		l1.pon_final(act.elem());
+		act.next();
+	}
+}
+
+//commplejidad constante ahora
+
+void concatena(const Lista<T>& l){
+	if(_prim == NULL){
+		_prim = l._prim;
+		_ult = l._ult;
+	}
+	else{
+		l._prim->ant = _ult;
+		_ult->sig = l._prim;
+		_ult = l._ult;
+	}
+	l._prim = NULL;
+	l._ult = NULL;
+}

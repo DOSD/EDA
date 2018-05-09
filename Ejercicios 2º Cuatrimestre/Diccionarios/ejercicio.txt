@@ -1,0 +1,16 @@
+ejercicio 3 Hoja T10
+
+//pre: k > 0
+template<classs K,class V>
+const K & consultarK(const Dciccionario<K,V> &d, int k){
+	Diccionario<K,V>:: ConstIterator i = d.cbegin();
+	Diccionario<K,V>:: ConstIterator f = d.cend();
+	while(k != 0 && i != f){
+		i.next();
+		k--;
+	}
+	if( i == f){
+		throw EAccesoNoValido();
+	}
+	else return i.clave();
+}
